@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # OPUS4DOS: an Ogg Opus player for DOS, on libopus (external/opus, a submodule, unmodified).
-# So far: libopus, built for 32-bit DOS.
 #
 #   . ~/bin/watcom/owsetenv.sh
-#   cmake --preset dos && cmake --build --preset dos
+#   cmake --preset dos && cmake --build --preset dos      -> build/dos/OPUS4DOS.EXE
 cmake_minimum_required(VERSION 3.21)
 # The dos preset (CMakePresets.json) makes this a 32-bit DOS build with wcl386, which needs
 # OpenWatcom's environment: owsetenv.sh sets it up.
@@ -37,4 +36,11 @@ set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
 set(OPUS_BUILD_TESTING OFF CACHE BOOL "" FORCE)
 set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
 set(OPUS_INSTALL_CMAKE_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
-add_subdirectory(external/opus)
+add_subdirectory(external/opus EXCLUDE_FROM_ALL)
+
+add_executable(opus4dos
+    src/opus4dos.c src/ogg.c src/resample.c
+    src/audio.c src/sb16.c src/isadma.c src/irq.c src/dosmem.c)
+target_compile_options(opus4dos PRIVATE -w3 -we)
+target_link_libraries(opus4dos PRIVATE opus)
+set_target_properties(opus4dos PROPERTIES OUTPUT_NAME OPUS4DOS SUFFIX .EXE LINK_FLAGS "option stack=64k")
