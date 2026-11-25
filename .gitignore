@@ -1,0 +1,4 @@
+build/
+__pycache__/
+# Audio made from commercial recordings (scripts/make_media.sh): never committed.
+media/

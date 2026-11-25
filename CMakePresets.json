@@ -1,0 +1,23 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "dos",
+            "displayName": "DOS: OpenWatcom 2, 32-bit flat model, DOS/32A, with Watcom WMake",
+            "description": "Source OpenWatcom's owsetenv.sh first: it puts wcl386 and wlink on the PATH and sets WATCOM.",
+            "generator": "Watcom WMake",
+            "binaryDir": "${sourceDir}/build/dos",
+            "cacheVariables": {
+                "CMAKE_SYSTEM_NAME": "DOS",
+                "CMAKE_SYSTEM_PROCESSOR": "x86",
+                "CMAKE_C_COMPILER": "wcl386"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "dos",
+            "configurePreset": "dos"
+        }
+    ]
+}
